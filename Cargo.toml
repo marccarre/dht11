@@ -1,1 +1,2 @@
 [workspace]
+members = ["dht11-embedded-hal-async"]
