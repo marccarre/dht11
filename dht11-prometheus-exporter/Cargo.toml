@@ -8,6 +8,7 @@ edition = "2021"
 [dependencies]
 actix-web = "4.4.1"
 clap = { version = "4.4.16", features = ["derive"] }
+clap-verbosity-flag = "2.1.1"
 log = "0.4.20"
 prometheus-client = "0.22.0"
 tracing = "0.1.40"
