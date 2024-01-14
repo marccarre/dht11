@@ -1,2 +1,5 @@
 [workspace]
-members = ["dht11-embedded-hal-async"]
+members = [
+    "dht11-embedded-hal-async",
+    "dht11-embedded-hal-async-rpi-linux-driver"
+]
