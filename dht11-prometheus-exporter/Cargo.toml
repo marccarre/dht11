@@ -12,3 +12,4 @@ clap-verbosity-flag = "2.1.1"
 log = "0.4.20"
 prometheus-client = "0.22.0"
 tracing = "0.1.40"
+tracing-subscriber = { version = "0.3.18", features = ["json"] }
