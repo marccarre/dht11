@@ -1,14 +1,9 @@
-setup-coverage:
+setup:
+    bin/setup
     rustup update
     rustup component add llvm-tools-preview
     cargo install grcov
-
-setup: setup-coverage
     rustup component add clippy
-    command -v pre-commit >/dev/null 2>&1 || brew install pre-commit
-    pre-commit install
-    pre-commit install --hook-type commit-msg
-    pre-commit run --all-files
 
 lint:
     pre-commit run --all-files

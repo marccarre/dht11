@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+# Description:
+#   Install the software development tools required to develop this project.
+
+set -euo pipefail
+
+function set_up_macos() {
+    command -v brew >/dev/null 2>&1 || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    command -v gitleaks >/dev/null 2>&1 || brew install gitleaks
+    command -v shellcheck >/dev/null 2>&1 || brew install shellcheck
+    command -v pre-commit >/dev/null 2>&1 || brew install pre-commit
+    command -v rustup >/dev/null 2>&1 || brew install rustup
+    command -v kind >/dev/null 2>&1 || brew install kind
+    command -v skaffold >/dev/null 2>&1 || brew install skaffold
+    command -v k9s >/dev/null 2>&1 || brew install k9s
+}
+
+function set_up_linux() {
+    command -v shellcheck >/dev/null 2>&1 || sudo apt-get install -y shellcheck
+    command -v pre-commit >/dev/null 2>&1 || pip install pre-commit
+    command -v rustup >/dev/null 2>&1 || { curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh ; }
+    command -v kind >/dev/null 2>&1 || {
+        [ "$(uname -m)" == "x86_64" ] && curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.31.0/kind-linux-amd64
+        chmod +x ./kind
+        sudo mv ./kind /usr/local/bin/kind
+    }
+    command -v skaffold >/dev/null 2>&1 || {
+        curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64 && \
+        sudo install skaffold /usr/local/bin/
+    }
+    command -v k9s >/dev/null 2>&1 || {
+        echo "k9s not installed: consider installing it by following instructions available at: https://k9scli.io/topics/install/"
+    }
+}
+
+function set_up() {
+    if [[ "$(uname -s)" == "Darwin" ]] ; then
+        set_up_macos
+    else
+        set_up_linux
+    fi
+}
+
+function main() {
+    set_up
+    pre-commit install
+    pre-commit install --hook-type commit-msg
+    pre-commit run --all-files
+}
+
+main
