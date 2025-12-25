@@ -3,5 +3,4 @@ members = [
     "dht11-embedded-hal-async",
     "dht11-embedded-hal-async-rpi-linux-driver",
     "dht11-opentelemetry-exporter",
-    "dht11-prometheus-exporter"
 ]
